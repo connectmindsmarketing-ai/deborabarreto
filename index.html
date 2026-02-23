@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estratégia Digital 360º - Dra. Débora Barreto</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Lexend:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #1e40af;
+            --accent: #3b82f6;
+            --success: #10b981;
+            --danger: #ef4444;
+            --bg: #f8fafc;
+            --text: #1e293b;
+        }
+
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); }
+        h1, h2, h3, h4, h5, h6 { font-family: 'Lexend', sans-serif; }
+
+        .sidebar-item {
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+            border-left: 4px solid transparent;
+        }
+        .sidebar-item:hover { background: #f1f5f9; color: var(--primary); }
+        .sidebar-item.active { 
+            background: #eff6ff; 
+            color: var(--primary); 
+            border-left: 4px solid var(--primary);
+            font-weight: 600;
+        }
+
+        .content-section { display: none; animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .content-section.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .glass-card { 
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px); 
+            border: 1px solid rgba(226, 232, 240, 0.8); 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="flex min-h-screen overflow-hidden">
+
+    <!-- SIDEBAR DE NAVEGAÇÃO -->
+    <aside class="w-72 bg-white border-r border-slate-200 flex flex-col hidden lg:flex h-screen z-10 shadow-sm shrink-0">
+        <div class="p-8 border-b border-slate-100">
+            <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Estratégia 2026</div>
+            <h1 class="text-xl font-bold text-slate-800 leading-tight">Dra. Débora Barreto</h1>
+        </div>
+        <nav class="flex-1 overflow-y-auto py-4">
+            <div onclick="showTab('diagnostico')" class="sidebar-item active p-4 px-8 text-sm flex items-center gap-3">
+                <span class="text-lg">📊</span> 1. Diagnóstico Digital
+            </div>
+            <div onclick="showTab('concorrencia')" class="sidebar-item p-4 px-8 text-sm flex items-center gap-3">
+                <span class="text-lg">⚔️</span> 2. Concorrência & Bench.
+            </div>
+            <div onclick="showTab('persona')" class="sidebar-item p-4 px-8 text-sm flex items-center gap-3">
+                <span class="text-lg">👤</span> 3. Mapa da Persona
+            </div>
+            <div onclick="showTab('editorial')" class="sidebar-item p-4 px-8 text-sm flex items-center gap-3">
+                <span class="text-lg">📝</span> 4. Estratégias de Conteúdos
+            </div>
+            <div onclick="showTab('reels')" class="sidebar-item p-4 px-8 text-sm flex items-center gap-3">
+                <span class="text-lg">🎬</span> 5. Roteiros de Reels (10)
+            </div>
+            <div onclick="showTab('funil')" class="sidebar-item p-4 px-8 text-sm flex items-center gap-3">
+                <span class="text-lg">🧠</span> 6. Caminho Psicológico
+            </div>
+        </nav>
+        <div class="p-6 bg-slate-50 border-t border-slate-100 flex flex-col gap-5">
+            <div>
+                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Status do Relatório</p>
+                <p class="text-xs text-slate-700 mt-1 font-medium">Mapeamento Completo V3</p>
+            </div>
+            <div class="pt-5 border-t border-slate-200">
+                <p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest mb-3">Desenvolvido Estrategicamente por</p>
+                
+                <!-- LOGO MENU LATERAL -->
+                <img src="https://i.postimg.cc/BbPsHBL4/3.png" alt="Minds Connect Marketing Digital" class="max-h-12 w-auto object-contain opacity-90 hover:opacity-100 transition-opacity duration-300">
+
+            </div>
+        </div>
+    </aside>
+
+    <!-- ÁREA DE CONTEÚDO PRINCIPAL -->
+    <main class="flex-1 h-screen overflow-y-auto bg-slate-50 scroll-smooth">
+        <div class="max-w-6xl mx-auto p-4 md:p-10 lg:p-12 pb-24">
+
+            <!-- 1. DIAGNÓSTICO DIGITAL -->
+            <section id="diagnostico" class="content-section active space-y-10">
+                <div class="border-b border-slate-200 pb-6">
+                    <span class="badge bg-blue-100 text-blue-700 mb-3">Secção 1</span>
+                    <h2 class="text-3xl font-bold text-slate-900">Diagnóstico Digital</h2>
+                    <p class="text-slate-500 mt-2 text-sm">Análise técnica profissional dos canais de captação e posicionamento da marca.</p>
+                </div>
+
+                <!-- Instagram -->
+                <div class="glass-card p-8 rounded-3xl">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8 border-b border-slate-100 pb-6">
+                        <h3 class="text-xl font-bold flex items-center gap-3 text-slate-800">
+                            <span class="p-2 bg-pink-100 text-pink-600 rounded-xl text-xl">📱</span> 
+                            Análise do Instagram (@deborabarretofisio)
+                        </h3>
+                        <div class="flex gap-4">
+                            <div class="text-center px-4 py-2 bg-slate-50 rounded-lg border border-slate-100">
+                                <p class="text-lg font-bold text-blue-600 leading-none">9.6k</p>
+                                <p class="text-[10px] font-bold text-slate-400 uppercase mt-1">Seguidores</p>
+                            </div>
+                            <div class="text-center px-4 py-2 bg-slate-50 rounded-lg border border-slate-100">
+                                <p class="text-lg font-bold text-blue-600 leading-none">545</p>
+                                <p class="text-[10px] font-bold text-slate-400 uppercase mt-1">Posts</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-4">
+                            <h4 class="font-bold text-emerald-600 flex items-center gap-2 text-sm uppercase tracking-wider">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                Pontos Fortes
+                            </h4>
+                            <ul class="space-y-3 text-sm text-slate-600">
+                                <li class="p-3 bg-emerald-50 rounded-xl border border-emerald-100"><strong>Posts frequentes e consistentes:</strong> 545 posts mostram atividade contínua, ajudando o algoritmo.</li>
+                                <li class="p-3 bg-emerald-50 rounded-xl border border-emerald-100"><strong>Conteúdo educativo e motivacional:</strong> Uso de reels e posts a falar de dores, correção e resultados.</li>
+                                <li class="p-3 bg-emerald-50 rounded-xl border border-emerald-100"><strong>Tom empático:</strong> Mensagens de gratidão e profissionalismo reforçam a conexão.</li>
+                            </ul>
+                        </div>
+                        <div class="space-y-4">
+                            <h4 class="font-bold text-red-500 flex items-center gap-2 text-sm uppercase tracking-wider">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                Oportunidades de Otimização
+                            </h4>
+                            <ul class="space-y-3 text-sm text-slate-600">
+                                <li class="p-3 bg-red-50 rounded-xl border border-red-100"><strong>Falta de destaque visual profissional:</strong> O perfil não costura uma identidade visual forte e diferencial tecnológico no primeiro olhar.</li>
+                                <li class="p-3 bg-red-50 rounded-xl border border-red-100"><strong>Pouca ênfase em provas sociais modernas:</strong> Faltam depoimentos em vídeo e antes/depois evidentes para aumentar a legitimidade.</li>
+                                <li class="p-3 bg-red-50 rounded-xl border border-red-100"><strong>Bio pouco estratégica:</strong> A descrição resume a proposta, mas falta uma chamada para ação clara (CTA) para o teste da pisada.</li>
+                                <li class="p-3 bg-red-50 rounded-xl border border-red-100"><strong>Conteúdo repetitivo:</strong> Foco em consciencialização, mas faltam resultados reais, dados/cifras e stories interativos.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Promessas de Posicionamento -->
+                <div class="glass-card p-8 rounded-3xl border-t-4 border-emerald-500">
+                    <h3 class="text-xl font-bold mb-6 flex items-center gap-3 text-slate-800">
+                        <span class="p-2 bg-emerald-100 text-emerald-600 rounded-xl text-xl">💡</span>
+                        Sugestões de Promessa Forte de Posicionamento
+                    </h3>
+                    <p class="text-slate-500 mb-6 text-sm">Mensagens centrais para unificar a comunicação no Instagram e elevar a perceção de valor (Posicionamento Premium).</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 hover:border-emerald-200 transition-colors">
+                            <h4 class="font-bold text-slate-800 text-sm mb-3 flex items-center gap-2"><span>🔥</span> Promessa Central</h4>
+                            <p class="text-sm text-slate-600 italic leading-relaxed">
+                                “A postura começa pelos pés. Corrigindo sua pisada, tratamos a causa da sua dor — não apenas os sintomas.”
+                            </p>
+                        </div>
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 hover:border-emerald-200 transition-colors">
+                            <h4 class="font-bold text-slate-800 text-sm mb-3 flex items-center gap-2"><span>💎</span> Versão Estratégica <span class="text-[10px] font-normal text-slate-400 uppercase tracking-widest">(Premium)</span></h4>
+                            <p class="text-sm text-slate-600 italic leading-relaxed">
+                                “Eu identifico e corrijo desequilíbrios na sua base corporal para eliminar dores nos pés, joelhos, quadril e coluna de forma personalizada e definitiva.”
+                            </p>
+                        </div>
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 hover:border-emerald-200 transition-colors">
+                            <h4 class="font-bold text-slate-800 text-sm mb-3 flex items-center gap-2"><span>🧠</span> Promessa Emocional</h4>
+                            <p class="text-sm text-slate-600 italic leading-relaxed">
+                                “Você não precisa conviver com dor. A causa pode estar nos seus pés — e eu mostro exatamente onde está o desequilíbrio.”
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900 text-white p-6 rounded-2xl">
+                        <h4 class="font-bold text-emerald-400 text-sm mb-4 flex items-center gap-2"><span>🎯</span> Frases Curtas para Bio do Instagram</h4>
+                        <ul class="space-y-3 text-sm text-slate-300">
+                            <li class="flex items-center gap-3"><span class="text-emerald-500 text-lg">✔</span> <span class="font-medium">Especialista em correção da pisada</span></li>
+                            <li class="flex items-center gap-3"><span class="text-emerald-500 text-lg">✔</span> <span class="font-medium">Dor não é idade. É desalinhamento.</span></li>
+                            <li class="flex items-center gap-3"><span class="text-emerald-500 text-lg">✔</span> <span class="font-medium">Avaliação tecnológica + palmilhas personalizadas</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Análise do Ecossistema de Sites -->
+                <div class="glass-card p-8 rounded-3xl border-t-4 border-blue-500">
+                    <h3 class="text-xl font-bold mb-2 flex items-center gap-3 text-slate-800">
+                        <span class="p-2 bg-blue-100 text-blue-600 rounded-xl text-xl">💻</span> 
+                        Análise do Ecossistema de Sites
+                    </h3>
+                    <p class="text-slate-500 mb-8 text-sm">Avaliação do site principal e do hub de links (Canva) utilizados atualmente na jornada de conversão.</p>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+                        <!-- Site Principal -->
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 hover:shadow-md transition-shadow">
+                            <h4 class="font-bold text-blue-700 text-base mb-5 flex items-center gap-2"><span>🌐</span> Site Principal (deborabarreto.com.br)</h4>
+                            <div class="space-y-5 text-sm text-slate-600">
+                                <div>
+                                    <span class="font-bold text-emerald-600 uppercase text-[10px] tracking-wider block mb-2 flex items-center gap-1"><span class="text-base">👍</span> Pontos Fortes</span>
+                                    <ul class="list-none space-y-2">
+                                        <li class="flex items-start gap-2"><span class="text-emerald-500 mt-0.5">•</span> <span>Estrutura institucional bem definida.</span></li>
+                                        <li class="flex items-start gap-2"><span class="text-emerald-500 mt-0.5">•</span> <span>Comunicação clara sobre o serviço.</span></li>
+                                        <li class="flex items-start gap-2"><span class="text-emerald-500 mt-0.5">•</span> <span>Boa apresentação da proposta de valor.</span></li>
+                                        <li class="flex items-start gap-2"><span class="text-emerald-500 mt-0.5">•</span> <span>Transmite autoridade e profissionalismo.</span></li>
+                                        <li class="flex items-start gap-2"><span class="text-emerald-500 mt-0.5">•</span> <span>Funciona como base sólida para tráfego pago e SEO.</span></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <span class="font-bold text-amber-600 uppercase text-[10px] tracking-wider block mb-2 flex items-center gap-1"><span class="text-base">🛠️</span> Oportunidades de Melhoria</span>
+                                    <ul class="list-none space-y-2">
+                                        <li class="flex items-start gap-2"><span class="text-amber-500 mt-0.5">•</span> <span>Pode reforçar ainda mais provas sociais (depoimentos, antes/depois, números).</span></li>
+                                        <li class="flex items-start gap-2"><span class="text-amber-500 mt-0.5">•</span> <span>Evoluir na força persuasiva e estratégica da copy associada aos CTAs.</span></li>
+                                        <li class="flex items-start gap-2"><span class="text-amber-500 mt-0.5">•</span> <span>Potencializar gatilhos de autoridade e prova social próximos às conversões.</span></li>
+                                        <li class="flex items-start gap-2"><span class="text-amber-500 mt-0.5">•</span> <span>Melhor organização de hierarquia visual para escaneabilidade.</span></li>
+                                    </ul>
+                                </div>
+                                <div class="bg-blue-100/50 p-4 rounded-xl text-blue-900 text-xs font-medium border border-blue-200">
+                                    <strong class="block mb-1 text-blue-700 uppercase tracking-wider text-[10px]">Conclusão Técnica</strong>
+                                    O site principal é uma ferramenta importante de autoridade e credibilidade, e não deve ser ignorado na estratégia digital.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Site Canva -->
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 hover:shadow-md transition-shadow">
+                            <h4 class="font-bold text-purple-700 text-base mb-5 flex items-center gap-2"><span>🔗</span> Site Canva (Link da Bio)</h4>
+                            <div class="space-y-5 text-sm text-slate-600">
+                                <div>
+                                    <span class="font-bold text-emerald-600 uppercase text-[10px] tracking-wider block mb-2 flex items-center gap-1"><span class="text-base">👍</span> Pontos Fortes</span>
+                                    <ul class="list-none space-y-2">
+                                        <li class="flex items-start gap-2"><span class="text-emerald-500 mt-0.5">•</span> <span>Organização centralizada.</span></li>
+                                        <li class="flex items-start gap-2"><span class="text-emerald-500 mt-0.5">•</span> <span>Visual simples e funcional.</span></li>
+                                        <li class="flex items-start gap-2"><span class="text-emerald-500 mt-0.5">•</span> <span>Direcionamento claro.</span></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <span class="font-bold text-amber-600 uppercase text-[10px] tracking-wider block mb-2 flex items-center gap-1"><span class="text-base">🛠️</span> Oportunidades de Melhoria</span>
+                                    <ul class="list-none space-y-2">
+                                        <li class="flex items-start gap-2"><span class="text-amber-500 mt-0.5">•</span> <span>Pode gerar fricção (um clique a mais até o WhatsApp).</span></li>
+                                        <li class="flex items-start gap-2"><span class="text-amber-500 mt-0.5">•</span> <span>Não reforça autoridade institucional como o site principal.</span></li>
+                                        <li class="flex items-start gap-2"><span class="text-amber-500 mt-0.5">•</span> <span>Se não for extremamente direto, pode dispersar o usuário.</span></li>
+                                        <li class="flex items-start gap-2"><span class="text-amber-500 mt-0.5">•</span> <span>Pode limitar rastreamento mais robusto de comportamento.</span></li>
+                                    </ul>
+                                </div>
+                                <div class="bg-purple-100/50 p-4 rounded-xl text-purple-900 text-xs font-medium border border-purple-200 mt-auto">
+                                    <strong class="block mb-1 text-purple-700 uppercase tracking-wider text-[10px]">Conclusão Técnica</strong>
+                                    O link do Canva funciona como hub, mas não deve ser a única porta de entrada estratégica.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recomendação Estratégica -->
+                    <div class="border-t border-slate-200 pt-8">
+                        <h4 class="font-bold text-slate-900 text-2xl mb-6 flex items-center gap-2"><span>🎯</span> Recomendação Estratégica para o Link da Bio</h4>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                            <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-lg">
+                                <div class="text-xs text-emerald-400 uppercase font-bold mb-3 tracking-wider">Considerando que:</div>
+                                <ul class="text-sm space-y-2 opacity-90">
+                                    <li class="flex items-center gap-2"><span class="text-emerald-500">✔</span> Conteúdo diário no IG</li>
+                                    <li class="flex items-center gap-2"><span class="text-emerald-500">✔</span> Perfil em otimização</li>
+                                    <li class="flex items-center gap-2"><span class="text-emerald-500">✔</span> Público já aquecido</li>
+                                    <li class="flex items-center gap-2"><span class="text-emerald-500">✔</span> Pessoas prontas p/ agendar</li>
+                                </ul>
+                            </div>
+                            <div class="md:col-span-2 bg-emerald-50 border border-emerald-100 p-6 rounded-2xl flex flex-col justify-center">
+                                <p class="text-base text-emerald-900 font-medium leading-relaxed mb-3">
+                                    Não é estratégico manter apenas o link do site Canva. É fundamental facilitar o caminho para quem já está pronto para converter.
+                                </p>
+                                <p class="text-sm text-emerald-700 bg-white p-3 rounded-lg border border-emerald-100 shadow-sm inline-block">
+                                    <strong>🚀 Conclusão:</strong> Essa configuração torna o Instagram não apenas um canal de conteúdo, mas um canal estruturado de geração de oportunidades (Conversão Imediata + Autoridade + Educação).
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-50 p-8 rounded-3xl border border-slate-200">
+                            <h5 class="font-bold text-slate-800 text-lg mb-6 flex items-center gap-2">✅ Nova Configuração Recomendada <span class="text-xs font-normal text-slate-500 ml-2">(Ordem Estratégica)</span></h5>
+                            <div class="space-y-4">
+                                <div class="flex flex-col sm:flex-row items-start gap-4 p-5 bg-white border border-slate-200 rounded-2xl hover:border-emerald-400 hover:shadow-md transition-all">
+                                    <div class="w-10 h-10 bg-emerald-500 text-white rounded-xl flex items-center justify-center font-bold text-xl shrink-0 shadow-inner">1</div>
+                                    <div class="flex-1">
+                                        <h6 class="font-bold text-slate-800 text-lg flex items-center flex-wrap gap-2">
+                                            Agende seu teste da pisada 
+                                            <span class="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-1 rounded-full uppercase tracking-wider">WhatsApp Direto</span>
+                                        </h6>
+                                        <p class="text-sm text-slate-500 mt-2 leading-relaxed"><strong>Motivo:</strong> Capturar o público quente que já confia e deseja agendar imediatamente. Reduz fricção e acelera conversão.</p>
+                                    </div>
+                                    <div class="hidden md:flex flex-col justify-center items-center bg-slate-50 px-4 py-2 rounded-lg border border-slate-100 shrink-0 w-48">
+                                        <span class="text-[10px] text-slate-400 uppercase font-bold">Perfil Atendido</span>
+                                        <span class="text-xs font-bold text-slate-700 text-center mt-1">O pronto para comprar</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-col sm:flex-row items-start gap-4 p-5 bg-white border border-slate-200 rounded-2xl hover:border-blue-400 hover:shadow-md transition-all">
+                                    <div class="w-10 h-10 bg-blue-600 text-white rounded-xl flex items-center justify-center font-bold text-xl shrink-0 shadow-inner">2</div>
+                                    <div class="flex-1">
+                                        <h6 class="font-bold text-slate-800 text-lg flex items-center flex-wrap gap-2">
+                                            Visite nosso site! 
+                                            <span class="text-[10px] font-bold text-blue-700 bg-blue-100 px-2 py-1 rounded-full uppercase tracking-wider">Site Principal</span>
+                                        </h6>
+                                        <p class="text-sm text-slate-500 mt-2 leading-relaxed"><strong>Motivo:</strong> Reforço de autoridade institucional. Ideal para quem quer conhecer melhor o serviço antes de tomar decisão.</p>
+                                    </div>
+                                    <div class="hidden md:flex flex-col justify-center items-center bg-slate-50 px-4 py-2 rounded-lg border border-slate-100 shrink-0 w-48">
+                                        <span class="text-[10px] text-slate-400 uppercase font-bold">Perfil Atendido</span>
+                                        <span class="text-xs font-bold text-slate-700 text-center mt-1">O que precisa confiar mais</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-col sm:flex-row items-start gap-4 p-5 bg-white border border-slate-200 rounded-2xl hover:border-purple-400 hover:shadow-md transition-all">
+                                    <div class="w-10 h-10 bg-purple-500 text-white rounded-xl flex items-center justify-center font-bold text-xl shrink-0 shadow-inner">3</div>
+                                    <div class="flex-1">
+                                        <h6 class="font-bold text-slate-800 text-lg flex items-center flex-wrap gap-2">
+                                            Entenda o teste da pisada 
+                                            <span class="text-[10px] font-bold text-purple-700 bg-purple-100 px-2 py-1 rounded-full uppercase tracking-wider">Site Canva</span>
+                                        </h6>
+                                        <p class="text-sm text-slate-500 mt-2 leading-relaxed"><strong>Motivo:</strong> Função educativa. Explica o processo de forma simples e objetiva, ajudando na tomada de decisão.</p>
+                                    </div>
+                                    <div class="hidden md:flex flex-col justify-center items-center bg-slate-50 px-4 py-2 rounded-lg border border-slate-100 shrink-0 w-48">
+                                        <span class="text-[10px] text-slate-400 uppercase font-bold">Perfil Atendido</span>
+                                        <span class="text-xs font-bold text-slate-700 text-center mt-1">O que precisa entender</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Google e Doctoralia -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="glass-card p-6 rounded-3xl border-l-8 border-red-500">
+                        <h4 class="font-bold text-slate-800 mb-2 flex items-center gap-2"><span>📍</span> Google Perfil Empresarial</h4>
+                        <div class="bg-red-50 text-red-800 text-xs font-bold px-3 py-1 rounded inline-block mb-3 uppercase tracking-wider">Alerta Crítico</div>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Apenas <strong>37 avaliações</strong>, todas realizadas há mais de 4 anos e <strong>sem nenhuma resposta</strong>. É urgente solicitar 2 novas avaliações por semana e responder a todas.
+                        </p>
+                    </div>
+                    <div class="glass-card p-6 rounded-3xl border-l-8 border-emerald-500">
+                        <h4 class="font-bold text-slate-800 mb-2 flex items-center gap-2"><span>🩺</span> Perfil Doctoralia</h4>
+                        <div class="bg-emerald-50 text-emerald-800 text-xs font-bold px-3 py-1 rounded inline-block mb-3 uppercase tracking-wider">Ativo Forte</div>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Possui classificação perfeita de <strong>5.0 estrelas</strong>. Este ativo de autoridade não está a ser explorado. Deve ser transposto para o Instagram como "Selo de Confiança".
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. CONCORRÊNCIA & BENCHMARKING -->
+            <section id="concorrencia" class="content-section space-y-10">
+                <div class="border-b border-slate-200 pb-6">
+                    <span class="badge bg-blue-100 text-blue-700 mb-3">Secção 2</span>
+                    <h2 class="text-3xl font-bold text-slate-900">Concorrência e Benchmarking Local</h2>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="glass-card p-6 rounded-2xl hover:shadow-md transition-all">
+                        <h4 class="font-bold text-blue-700 text-lg mb-1">Readaptec Baropodometria</h4>
+                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-3">Benchmarking Técnico</p>
+                        <p class="text-sm text-slate-600"><strong>Destaque:</strong> Combina análise estática com análise da marcha e corrida.</p>
+                        <p class="text-sm text-slate-600 mt-1"><strong>Oportunidade:</strong> Focar na explicação didática dos resultados.</p>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl hover:shadow-md transition-all">
+                        <h4 class="font-bold text-blue-700 text-lg mb-1">Dr. Leonardo Bomfim</h4>
+                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-3">Benchmarking de Humanização</p>
+                        <p class="text-sm text-slate-600"><strong>Destaque:</strong> Excelente equilíbrio entre a vida real (família/treino) e a vida profissional.</p>
+                        <p class="text-sm text-slate-600 mt-1"><strong>Oportunidade:</strong> Humanizar o perfil sem perder o foco na baropodometria.</p>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl hover:shadow-md transition-all">
+                        <h4 class="font-bold text-blue-700 text-lg mb-1">HA Fisioterapia</h4>
+                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-3">Benchmarking Educativo</p>
+                        <p class="text-sm text-slate-600"><strong>Destaque:</strong> Utilização muito forte do termo "Podoposturologia".</p>
+                        <p class="text-sm text-slate-600 mt-1"><strong>Oportunidade:</strong> Simplificar a comunicação.</p>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl hover:shadow-md transition-all">
+                        <h4 class="font-bold text-blue-700 text-lg mb-1">Vita Manuela</h4>
+                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-3">Benchmarking de Nicho (Infantil)</p>
+                        <p class="text-sm text-slate-600"><strong>Destaque:</strong> Foco excecional em famílias e no desenvolvimento da marcha infantil.</p>
+                        <p class="text-sm text-slate-600 mt-1"><strong>Oportunidade:</strong> Criar um destaque para "Pais preocupados".</p>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 text-white p-10 rounded-3xl mt-8">
+                    <h3 class="text-2xl font-bold mb-6 text-emerald-400">Os 5 Diferenciais Únicos (Vantagem Competitiva)</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 text-center">
+                        <div class="bg-slate-800 p-4 rounded-2xl border border-slate-700">
+                            <span class="text-3xl block mb-2">🧑‍⚕️</span>
+                            <span class="text-xs font-bold leading-tight">Expertise<br>Direta</span>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-2xl border border-slate-700">
+                            <span class="text-3xl block mb-2">🔬</span>
+                            <span class="text-xs font-bold leading-tight">Diagnóstico<br>Integrado</span>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-2xl border border-slate-700">
+                            <span class="text-3xl block mb-2">👟</span>
+                            <span class="text-xs font-bold leading-tight">Palmilha<br>Funcional</span>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-2xl border border-slate-700">
+                            <span class="text-3xl block mb-2">🔄</span>
+                            <span class="text-xs font-bold leading-tight">Revisão e<br>Pós-venda</span>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-2xl border border-slate-700">
+                            <span class="text-3xl block mb-2">📍</span>
+                            <span class="text-xs font-bold leading-tight">Autoridade<br>Local</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Temas que Performam Bem -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 mt-8">
+                    <h3 class="text-2xl font-bold mb-2 flex items-center gap-2 text-slate-800">
+                        <span>📊</span> Temas que Performam Bem (Inspiração no Mercado)
+                    </h3>
+                    <p class="text-sm text-slate-500 mb-8">Esses elementos são comuns em perfis com maior engajamento e credibilidade no nicho.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-300 transition-colors">
+                            <h4 class="font-bold text-blue-700 text-sm mb-3 flex items-center gap-2"><span>📌</span> Humanização + Educativo</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">Mostrar profissionais, pacientes (com consentimento), processos de avaliação e ajuste das palmilhas. Conteúdos tipo “o que seu pé está tentando dizer?” com gráficos coloridos.</p>
+                        </div>
+                        <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-300 transition-colors">
+                            <h4 class="font-bold text-blue-700 text-sm mb-3 flex items-center gap-2"><span>📌</span> Antes & Depois da Baropodometria</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">Gráficos animados, lines e planos de pressão — isso dá autoridade técnica visual imediata.</p>
+                        </div>
+                        <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-300 transition-colors">
+                            <h4 class="font-bold text-blue-700 text-sm mb-3 flex items-center gap-2"><span>📌</span> Vídeos Curtos Explicativos</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">Reels com 15–30s explicando termos como “o que é baropodometria?”. Comparações visuais: impacto errado vs. corrigido.</p>
+                        </div>
+                        <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-300 transition-colors">
+                            <h4 class="font-bold text-blue-700 text-sm mb-3 flex items-center gap-2"><span>📌</span> Depoimentos Multicamadas</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">Combinar o texto da fala + legendas dinâmicas + áudio com forte apelo emocional.</p>
+                        </div>
+                        <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 hover:border-blue-300 transition-colors">
+                            <h4 class="font-bold text-blue-700 text-sm mb-3 flex items-center gap-2"><span>📌</span> Checklist de Saúde dos Pés</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">Mini infográficos com perguntas que o público responde através das enquetes nos Stories.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Oportunidades de Melhoria (Melhores Práticas) -->
+                <div class="glass-card p-8 rounded-3xl border-t-4 border-blue-500 mt-8">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-2 text-slate-800">
+                        <span>🚀</span> Oportunidades de Melhoria <span class="text-lg font-normal text-slate-500">(Melhores Práticas)</span>
+                    </h3>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="space-y-4">
+                            <h4 class="font-bold text-blue-700 text-sm uppercase tracking-wider flex items-center gap-2"><span>🔹</span> Conteúdo & Autoridade</h4>
+                            <ul class="space-y-3 text-sm text-slate-600">
+                                <li class="flex items-start gap-2"><span class="shrink-0 mt-0.5">📌</span> <span><strong>Educar com ciência e provas:</strong> posts com gráficos, dados e resultados clínicos que expliquem por que a baropodometria funciona.</span></li>
+                                <li class="flex items-start gap-2"><span class="shrink-0 mt-0.5">📌</span> <span><strong>Depoimentos em vídeo:</strong> pacientes explicando sua transformação, com foco nas dores antes/depois.</span></li>
+                                <li class="flex items-start gap-2"><span class="shrink-0 mt-0.5">📌</span> <span><strong>Conteúdo longo:</strong> posts carrossel para SEO com temas como: "3 sinais de que sua pisada está causando sua dor" e "O que esperar da baropodometria tecnologicamente avançada".</span></li>
+                            </ul>
+                        </div>
+                        <div class="space-y-4">
+                            <h4 class="font-bold text-blue-700 text-sm uppercase tracking-wider flex items-center gap-2"><span>🔹</span> Experiência & Prova Social</h4>
+                            <ul class="space-y-3 text-sm text-slate-600">
+                                <li class="flex items-start gap-2"><span class="shrink-0 mt-0.5">📌</span> <span><strong>Casos reais com números:</strong> ex.: "reduziu dor em X% após X semanas".</span></li>
+                                <li class="flex items-start gap-2"><span class="shrink-0 mt-0.5">📌</span> <span><strong>Publicar resultados de baropodometria:</strong> (com consentimento) que mostrem mapas de pressão plantar e explicações.</span></li>
+                            </ul>
+                        </div>
+                        <div class="space-y-4">
+                            <h4 class="font-bold text-blue-700 text-sm uppercase tracking-wider flex items-center gap-2"><span>🔹</span> Marketing & Conversão</h4>
+                            <ul class="space-y-3 text-sm text-slate-600">
+                                <li class="flex items-start gap-2"><span class="shrink-0 mt-0.5">📌</span> <span><strong>Página de captura (Landing Page):</strong> com oferta clara — de preferência com Lead Magnet. Ex: "Guia prático: 7 sinais que sua pisada está te prejudicando".</span></li>
+                                <li class="flex items-start gap-2"><span class="shrink-0 mt-0.5">📌</span> <span><strong>Integração direta:</strong> entre Instagram → WhatsApp/Agendamento direto para reduzir atrito.</span></li>
+                                <li class="flex items-start gap-2"><span class="shrink-0 mt-0.5">📌</span> <span><strong>Aumentar avaliações no Google:</strong> e responder a todas elas para aumentar conversões.</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. MAPA DA PERSONA -->
+            <section id="persona" class="content-section space-y-10">
+                <div class="border-b border-slate-200 pb-6">
+                    <span class="badge bg-blue-100 text-blue-700 mb-3">Secção 3</span>
+                    <h2 class="text-3xl font-bold text-slate-900">Mapa Profundo da Persona</h2>
+                </div>
+
+                <div class="bg-gradient-to-r from-blue-700 to-blue-900 text-white p-8 md:p-10 rounded-3xl shadow-lg relative overflow-hidden">
+                    <div class="absolute right-0 top-0 opacity-10 text-9xl -mt-4 -mr-4">👤</div>
+                    <h3 class="text-3xl font-bold mb-2 flex items-center flex-wrap gap-3">
+                        Mariana Almeida
+                        <span class="text-[10px] font-normal bg-white/10 text-blue-100 px-3 py-1 rounded-full border border-white/20 tracking-wider uppercase">Nome Fictício</span>
+                    </h3>
+                    <p class="text-blue-200 font-bold uppercase tracking-wider text-sm mb-6">35 a 52 anos • Profissional Ativa / Mãe • Urbana</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
+                        <div class="bg-black/20 p-5 rounded-2xl border border-white/10">
+                            <p class="text-xs font-bold text-blue-300 uppercase tracking-wider mb-2">O Problema Real</p>
+                            <p class="text-sm leading-relaxed">Dores frequentes (e cada vez mais incapacitantes) nos pés, calcanhares, joelhos e coluna lombar, especialmente após longos períodos em pé ou ao acordar.</p>
+                        </div>
+                        <div class="bg-black/20 p-5 rounded-2xl border border-white/10">
+                            <p class="text-xs font-bold text-blue-300 uppercase tracking-wider mb-2">O que a impede de resolver?</p>
+                            <p class="text-sm leading-relaxed">A crença (muitas vezes reforçada por médicos genéricos) de que a dor "é da idade". A falta de tempo. O medo de gastar muito dinheiro com tratamentos que só mascaram a dor temporariamente.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="glass-card p-6 rounded-2xl border-t-4 border-red-500">
+                        <h4 class="font-bold text-slate-800 text-sm uppercase tracking-wider mb-4 flex items-center gap-2"><span>🚨</span> 5 Dificuldades</h4>
+                        <ul class="text-xs text-slate-600 space-y-3">
+                            <li><strong>1.</strong> Ficar muito tempo em pé em eventos sociais ou no trabalho.</li>
+                            <li><strong>2.</strong> Dar o primeiro passo ao levantar-se da cama de manhã.</li>
+                            <li><strong>3.</strong> Fazer exercícios físicos (mesmo caminhadas leves) sem sentir dor.</li>
+                            <li><strong>4.</strong> Encontrar um calçado que seja bonito e não cause sofrimento.</li>
+                            <li><strong>5.</strong> Lidar com o inchaço e cansaço extremo nas pernas ao final do dia.</li>
+                        </ul>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl border-t-4 border-orange-500">
+                        <h4 class="font-bold text-slate-800 text-sm uppercase tracking-wider mb-4 flex items-center gap-2"><span>😰</span> 5 Medos</h4>
+                        <ul class="text-xs text-slate-600 space-y-3">
+                            <li><strong>1.</strong> Precisar de fazer uma cirurgia na coluna ou joelho no futuro.</li>
+                            <li><strong>2.</strong> Desenvolver artrose severa ou joanetes irreversíveis.</li>
+                            <li><strong>3.</strong> Perder a autonomia e precisar de ajuda para tarefas básicas.</li>
+                            <li><strong>4.</strong> Sofrer uma queda grave por falta de equilíbrio e estabilidade.</li>
+                            <li><strong>5.</strong> Ficar dependente de anti-inflamatórios para o resto da vida.</li>
+                        </ul>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl border-t-4 border-purple-500">
+                        <h4 class="font-bold text-slate-800 text-sm uppercase tracking-wider mb-4 flex items-center gap-2"><span>💔</span> Impacto Relacional</h4>
+                        <ul class="text-xs text-slate-600 space-y-3">
+                            <li><strong>1.</strong> Fica sem paciência e irritada com o parceiro/filhos devido à dor.</li>
+                            <li><strong>2.</strong> Evita passeios no fim de semana porque sabe que não aguenta andar.</li>
+                            <li><strong>3.</strong> Sente vergonha da sua postura (andar curvada ou a mancar).</li>
+                            <li><strong>4.</strong> Deixa de brincar no chão com os filhos/netos.</li>
+                            <li><strong>5.</strong> Sente-se a "chata" que está sempre a reclamar que tem dor.</li>
+                        </ul>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl border-t-4 border-emerald-500">
+                        <h4 class="font-bold text-slate-800 text-sm uppercase tracking-wider mb-4 flex items-center gap-2"><span>✨</span> 5 Desejos</h4>
+                        <ul class="text-xs text-slate-600 space-y-3">
+                            <li><strong>1.</strong> Chegar ao final do dia com energia e sem dor nenhuma.</li>
+                            <li><strong>2.</strong> Voltar a usar os sapatos e saltos que gosta.</li>
+                            <li><strong>3.</strong> Conseguir manter uma rotina de exercícios físicos.</li>
+                            <li><strong>4.</strong> Ter uma postura elegante, alinhada e confiante.</li>
+                            <li><strong>5.</strong> Ter a certeza de que está a envelhecer com saúde e mobilidade.</li>
+                        </ul>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl border-t-4 border-slate-700">
+                        <h4 class="font-bold text-slate-800 text-sm uppercase tracking-wider mb-4 flex items-center gap-2"><span>🚧</span> 5 Objeções</h4>
+                        <ul class="text-xs text-slate-600 space-y-3">
+                            <li><strong>1.</strong> "Palmilha é tudo igual, já comprei uma e não serviu."</li>
+                            <li><strong>2.</strong> "O meu caso é genético, nada vai resolver."</li>
+                            <li><strong>3.</strong> "A dor é na minha coluna, porque preciso de uma palmilha?"</li>
+                            <li><strong>4.</strong> "Deve ser um tratamento muito caro."</li>
+                            <li><strong>5.</strong> "Não tenho tempo para fazer mais exames demorados."</li>
+                        </ul>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl border-t-4 border-pink-500">
+                        <h4 class="font-bold text-slate-800 text-sm uppercase tracking-wider mb-4 flex items-center gap-2"><span>🗣️</span> Vozes e Culpados</h4>
+                        <ul class="text-[11px] text-slate-500 space-y-2 italic">
+                            <li>"A Mariana anda toda torta ultimamente."</li>
+                            <li>"Nossa, o seu sapato está todo gasto de um lado."</li>
+                            <li>"Isso é da idade, acostume-se."</li>
+                            <li class="not-italic text-slate-700 mt-3 font-bold">Na cabeça dela, a culpa é:</li>
+                            <li>Do peso, dos sapatos ruins que usou, da genética familiar ou dos médicos que nunca resolveram.</li>
+                        </ul>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl border-t-4 border-rose-500">
+                        <h4 class="font-bold text-slate-800 text-sm uppercase tracking-wider mb-4 flex items-center gap-2"><span>💬</span> 5 Frases Ofensivas</h4>
+                        <ul class="text-xs text-slate-600 space-y-3 italic">
+                            <li><strong>1.</strong> "Isso é coisa da idade."</li>
+                            <li><strong>2.</strong> "Você precisa emagrecer."</li>
+                            <li><strong>3.</strong> "É só fazer alongamento."</li>
+                            <li><strong>4.</strong> "Todo mundo sente dor."</li>
+                            <li><strong>5.</strong> "Você reclama demais."</li>
+                        </ul>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl border-t-4 border-indigo-500">
+                        <h4 class="font-bold text-slate-800 text-sm uppercase tracking-wider mb-4 flex items-center gap-2"><span>🫣</span> 5 Histórias Constrangedoras</h4>
+                        <ul class="text-xs text-slate-600 space-y-3">
+                            <li><strong>1.</strong> Precisar sentar no meio de um passeio por causa da dor.</li>
+                            <li><strong>2.</strong> Evitar usar salto ou determinado calçado por não aguentar.</li>
+                            <li><strong>3.</strong> Ser a única pessoa do grupo a reclamar de dor.</li>
+                            <li><strong>4.</strong> Ter que cancelar viagem por desconforto físico.</li>
+                            <li><strong>5.</strong> Tropeçar ou perder o equilíbrio em público.</li>
+                        </ul>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl border-t-4 border-teal-500">
+                        <h4 class="font-bold text-slate-800 text-sm uppercase tracking-wider mb-4 flex items-center gap-2"><span>🕰️</span> 5 Pensamentos (Passado)</h4>
+                        <ul class="text-xs text-slate-600 space-y-3 italic">
+                            <li><strong>1.</strong> "Já fiz fisioterapia e a dor voltou."</li>
+                            <li><strong>2.</strong> "Troquei o tênis e não adiantou."</li>
+                            <li><strong>3.</strong> "O médico disse que é desgaste."</li>
+                            <li><strong>4.</strong> "Gastei dinheiro e continuo com dor."</li>
+                            <li><strong>5.</strong> "Sempre trato o joelho, mas nunca melhora de vez."</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-slate-800 text-white p-6 rounded-2xl">
+                        <h4 class="font-bold text-sm uppercase text-slate-400 mb-3">Pensamentos ao Deitar</h4>
+                        <p class="text-xs italic text-slate-300 leading-relaxed">
+                            "Será que amanhã vou acordar a conseguir colocar o pé no chão? Eu não devia sentir tanta dor com esta idade. Queria tanto uma solução definitiva em vez de mais remédios."
+                        </p>
+                    </div>
+                    <div class="bg-amber-50 p-6 rounded-2xl border border-amber-100">
+                        <h4 class="font-bold text-sm uppercase text-amber-800 mb-3">O Que Já Tentou</h4>
+                        <p class="text-xs text-amber-700 leading-relaxed">
+                            Fisioterapia convencional (choquinhos), anti-inflamatórios potentes, palmilhas de silicone de farmácia, trocar de colchão, comprar ténis ortopédicos feios. Tudo com alívio temporário.
+                        </p>
+                    </div>
+                    <div class="bg-red-50 p-6 rounded-2xl border border-red-100">
+                        <h4 class="font-bold text-sm uppercase text-red-800 mb-3">O Que Ela NÃO Quer</h4>
+                        <p class="text-xs text-red-700 leading-relaxed">
+                            Ela não quer fazer cirurgia. Não quer ficar dependente de medicação que faz mal ao estômago. E recusa-se a aceitar que vai envelhecer "travada" e sem qualidade de vida.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mt-10">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-2 text-slate-800 border-t border-slate-200 pt-8">
+                        <span>🦋</span> Transformação Desejada
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="glass-card p-6 rounded-2xl border-t-4 border-emerald-500">
+                            <h4 class="font-bold text-slate-800 text-sm uppercase tracking-wider mb-4 flex items-center gap-2"><span>🎯</span> Solução Perfeita (Na mente dela)</h4>
+                            <p class="text-sm text-slate-600 leading-relaxed italic bg-emerald-50 p-4 rounded-xl border border-emerald-100">
+                                "Descobrir a causa real da dor, corrigir o problema na raiz e voltar a ter mobilidade sem dor."
+                            </p>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl border-t-4 border-blue-500">
+                            <h4 class="font-bold text-slate-800 text-sm uppercase tracking-wider mb-4 flex items-center gap-2"><span>💞</span> Impactos Positivos</h4>
+                            <p class="text-[10px] text-slate-400 mb-3 uppercase font-bold">Nos relacionamentos e autoimagem:</p>
+                            <ul class="text-xs text-slate-600 space-y-3">
+                                <li class="flex items-start gap-2"><span class="shrink-0 mt-0.5 text-blue-500">✔️</span> <span>Voltar a caminhar com o parceiro(a)</span></li>
+                                <li class="flex items-start gap-2"><span class="shrink-0 mt-0.5 text-blue-500">✔️</span> <span>Brincar com filhos/netos sem limitações</span></li>
+                                <li class="flex items-start gap-2"><span class="shrink-0 mt-0.5 text-blue-500">✔️</span> <span>Viajar sem medo</span></li>
+                                <li class="flex items-start gap-2"><span class="shrink-0 mt-0.5 text-blue-500">✔️</span> <span>Sentir-se ativa e jovem novamente</span></li>
+                                <li class="flex items-start gap-2"><span class="shrink-0 mt-0.5 text-blue-500">✔️</span> <span>Recuperar autoestima</span></li>
+                            </ul>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl border-t-4 border-amber-500">
+                            <h4 class="font-bold text-slate-800 text-sm uppercase tracking-wider mb-4 flex items-center gap-2"><span>⚖️</span> Disposta a abrir mão de:</h4>
+                            <p class="text-[10px] text-slate-400 mb-3 uppercase font-bold">Para resolver o problema:</p>
+                            <ul class="text-xs text-slate-600 space-y-3">
+                                <li class="flex items-start gap-2"><span class="shrink-0 mt-0.5">💸</span> <span>Parte do orçamento mensal</span></li>
+                                <li class="flex items-start gap-2"><span class="shrink-0 mt-0.5">⏱️</span> <span>Tempo para consultas</span></li>
+                                <li class="flex items-start gap-2"><span class="shrink-0 mt-0.5">😣</span> <span>Desconforto inicial até adaptar-se à palmilha</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. ESTRATÉGIAS DE CONTEÚDOS -->
+            <section id="editorial" class="content-section space-y-10">
+                <div class="border-b border-slate-200 pb-6">
+                    <span class="badge bg-blue-100 text-blue-700 mb-3">Secção 4</span>
+                    <h2 class="text-3xl font-bold text-slate-900">Estratégias de Conteúdos</h2>
+                </div>
+
+                <div>
+                    <h3 class="text-xl font-bold text-slate-800 mb-6">Os 5 eixos temáticos que vão guiar a criação de todo o conteúdo para o Instagram.</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                        <div class="glass-card p-6 rounded-2xl">
+                            <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold text-lg mb-4">1</div>
+                            <h4 class="font-bold text-slate-800 text-sm mb-2">Educação e Consciência</h4>
+                            <p class="text-xs text-slate-500 leading-relaxed">
+                                <strong>Foco:</strong> Quebrar o mito da "dor da idade". Ensinar que o pé é a base de tudo. <br>
+                                <strong>Temas:</strong> O "efeito dominó" da pisada torta, fascite plantar real vs mito.
+                            </p>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl">
+                            <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold text-lg mb-4">2</div>
+                            <h4 class="font-bold text-slate-800 text-sm mb-2">A Solução (Tecnologia)</h4>
+                            <p class="text-xs text-slate-500 leading-relaxed">
+                                <strong>Foco:</strong> Diferenciar o serviço da Dra. Débora das clínicas genéricas. <br>
+                                <strong>Temas:</strong> O que é baropodometria, como a palmilha fresada é feita, exame na prática.
+                            </p>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl">
+                            <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold text-lg mb-4">3</div>
+                            <h4 class="font-bold text-slate-800 text-sm mb-2">Autoridade Técnica</h4>
+                            <p class="text-xs text-slate-500 leading-relaxed">
+                                <strong>Foco:</strong> Mostrar competência científica. <br>
+                                <strong>Temas:</strong> Explicação de laudos, participação em cursos, o rigor do laboratório.
+                            </p>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl">
+                            <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold text-lg mb-4">4</div>
+                            <h4 class="font-bold text-slate-800 text-sm mb-2">Conexão Emocional</h4>
+                            <p class="text-xs text-slate-500 leading-relaxed">
+                                <strong>Foco:</strong> Falar diretamente aos medos da Mariana. <br>
+                                <strong>Temas:</strong> Histórias reais, "O dia que recuperei o meu passeio de domingo", empatia com a dor invisível.
+                            </p>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl">
+                            <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold text-lg mb-4">5</div>
+                            <h4 class="font-bold text-slate-800 text-sm mb-2">Conversão e Ação</h4>
+                            <p class="text-xs text-slate-500 leading-relaxed">
+                                <strong>Foco:</strong> Chamar para a avaliação no WhatsApp. <br>
+                                <strong>Temas:</strong> Escassez de vagas de avaliação, passo a passo do agendamento, CTAs diretos.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 text-white p-8 rounded-3xl mt-8">
+                    <h4 class="font-bold text-emerald-400 mb-4">Estratégia de Crescimento (Visão Geral)</h4>
+                    <p class="text-sm text-slate-300 leading-relaxed">
+                        A Mariana compra o seu conhecimento através do conteúdo educativo, mas ela só agenda a consulta por causa da segurança e empatia que sente ao ver a Dra. Débora a falar nos vídeos. O design do perfil precisa ser limpo, claro e passar a ideia de um "Laboratório de Marcha Avançado", e não de uma clínica de estética ou fisioterapia de bairro.
+                    </p>
+                </div>
+
+                <!-- Método EJACA -->
+                <div class="mt-10">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-2 text-slate-800 border-t border-slate-200 pt-8">
+                        <span>🧩</span> Método EJACA (Tipos de Conteúdos)
+                    </h3>
+                    <p class="text-slate-500 mb-8 text-sm">Estrutura persuasiva para guiões de vídeos e posts em carrossel que conectam com a dor e geram autoridade instantânea.</p>
+
+                    <div class="space-y-5">
+                        <div class="glass-card p-6 rounded-2xl flex flex-col md:flex-row gap-6 items-start border-l-4 border-emerald-500 hover:shadow-md transition-shadow">
+                            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center font-bold text-3xl shrink-0">E</div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-lg mb-3 uppercase tracking-wider">Encorajar Sonhos</h4>
+                                <ul class="text-sm text-slate-600 space-y-2">
+                                    <li class="flex items-start gap-2"><span class="text-emerald-500 mt-0.5">✔️</span> Mostrar exames comparativos antes/depois.</li>
+                                    <li class="flex items-start gap-2"><span class="text-emerald-500 mt-0.5">✔️</span> Explicar a lógica biomecânica de forma simples.</li>
+                                    <li class="flex items-start gap-2"><span class="text-emerald-500 mt-0.5">✔️</span> Mostrar pacientes reais que voltaram a caminhar sem dor.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl flex flex-col md:flex-row gap-6 items-start border-l-4 border-amber-500 hover:shadow-md transition-shadow">
+                            <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center font-bold text-3xl shrink-0">J</div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-lg mb-3 uppercase tracking-wider">Justificar Erros</h4>
+                                <ul class="text-sm text-slate-600 space-y-2">
+                                    <li class="flex items-start gap-2"><span class="text-amber-500 mt-0.5">✔️</span> Explicar que tratar só o local da dor não resolve a causa.</li>
+                                    <li class="flex items-start gap-2"><span class="text-amber-500 mt-0.5">✔️</span> Mostrar que a maioria das pessoas ignora a base corporal.</li>
+                                    <li class="flex items-start gap-2"><span class="text-amber-500 mt-0.5">✔️</span> Normalizar tentativas anteriores sem resultado.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl flex flex-col md:flex-row gap-6 items-start border-l-4 border-blue-500 hover:shadow-md transition-shadow">
+                            <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center font-bold text-3xl shrink-0">A</div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-lg mb-3 uppercase tracking-wider">Aliviar Medos</h4>
+                                <ul class="text-sm text-slate-600 space-y-2">
+                                    <li class="flex items-start gap-2"><span class="text-blue-500 mt-0.5">✔️</span> Avaliação tecnológica precisa.</li>
+                                    <li class="flex items-start gap-2"><span class="text-blue-500 mt-0.5">✔️</span> Tratamento personalizado.</li>
+                                    <li class="flex items-start gap-2"><span class="text-blue-500 mt-0.5">✔️</span> Acompanhamento profissional próximo.</li>
+                                    <li class="flex items-start gap-2"><span class="text-blue-500 mt-0.5">✔️</span> Explicação clara do diagnóstico.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl flex flex-col md:flex-row gap-6 items-start border-l-4 border-purple-500 hover:shadow-md transition-shadow">
+                            <div class="w-16 h-16 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center font-bold text-3xl shrink-0">C</div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-lg mb-3 uppercase tracking-wider">Confirmar Suspeitas</h4>
+                                <ul class="text-sm text-slate-600 space-y-2">
+                                    <li class="flex items-start gap-2"><span class="text-purple-500 mt-0.5">✔️</span> A postura realmente começa pelos pés.</li>
+                                    <li class="flex items-start gap-2"><span class="text-purple-500 mt-0.5">✔️</span> A dor pode ser consequência de desalinhamento.</li>
+                                    <li class="flex items-start gap-2"><span class="text-purple-500 mt-0.5">✔️</span> Palmilha genérica não resolve problema estrutural.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl flex flex-col md:flex-row gap-6 items-start border-l-4 border-rose-500 hover:shadow-md transition-shadow">
+                            <div class="w-16 h-16 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center font-bold text-3xl shrink-0">A</div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-lg mb-3 uppercase tracking-wider">Apontar Culpados</h4>
+                                <ul class="text-sm text-slate-600 space-y-2">
+                                    <li class="flex items-start gap-2"><span class="text-rose-500 mt-0.5">✔️</span> Tratamentos superficiais.</li>
+                                    <li class="flex items-start gap-2"><span class="text-rose-500 mt-0.5">✔️</span> Falta de avaliação biomecânica.</li>
+                                    <li class="flex items-start gap-2"><span class="text-rose-500 mt-0.5">✔️</span> Cultura de “remédio resolve tudo”.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sugestões de Ganchos -->
+                <div class="mt-10">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-2 text-slate-800 border-t border-slate-200 pt-8">
+                        <span>🪝</span> Sugestões de Ganchos (Anúncios & Conteúdos)
+                    </h3>
+                    <p class="text-slate-500 mb-8 text-sm">Ganchos curtos e de alto impacto para capturar a atenção da Mariana nos primeiros 3 segundos de vídeos ou textos patrocinados.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="glass-card p-6 rounded-2xl border-l-4 border-blue-500 hover:shadow-md transition-shadow flex items-center">
+                            <p class="text-sm text-slate-700 italic font-medium leading-relaxed">
+                                “Sua dor no joelho pode começar no pé — e você nem imagina.”
+                            </p>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl border-l-4 border-emerald-500 hover:shadow-md transition-shadow flex items-center">
+                            <p class="text-sm text-slate-700 italic font-medium leading-relaxed">
+                                “Se você trata a coluna mas nunca avaliou sua pisada, pode estar tratando errado.”
+                            </p>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl border-l-4 border-amber-500 hover:shadow-md transition-shadow flex items-center">
+                            <p class="text-sm text-slate-700 italic font-medium leading-relaxed">
+                                “Dor não é idade. Pode ser desalinhamento.”
+                            </p>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl border-l-4 border-purple-500 hover:shadow-md transition-shadow flex items-center">
+                            <p class="text-sm text-slate-700 italic font-medium leading-relaxed">
+                                “Você pisaria diferente se soubesse o que está acontecendo nos seus pés?”
+                            </p>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl border-l-4 border-rose-500 hover:shadow-md transition-shadow flex items-center">
+                            <p class="text-sm text-slate-700 italic font-medium leading-relaxed">
+                                “A raiz da sua dor pode estar abaixo do seu tornozelo.”
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Estrutura Semanal Recomendada -->
+                <div class="mt-10">
+                    <h3 class="text-2xl font-bold mb-6 flex items-center gap-2 text-slate-800 border-t border-slate-200 pt-8">
+                        <span>📅</span> Estrutura Semanal Recomendada
+                    </h3>
+                    <p class="text-slate-500 mb-8 text-sm">Exemplo de distribuição prática garantindo o equilíbrio perfeito na rotina: 7 conteúdos por semana (1 para cada dia).</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="glass-card p-6 rounded-2xl border-l-4 border-emerald-500 hover:shadow-md transition-shadow">
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold tracking-wider">2 DIAS</span>
+                                <h4 class="font-bold text-slate-800 text-sm uppercase tracking-wider">Conteúdos de Autoridade</h4>
+                            </div>
+                            <p class="text-[11px] text-emerald-600 font-bold uppercase mb-4">Objetivo: Gerar credibilidade e perceção técnica (educação científica simples).</p>
+                            <ul class="text-xs text-slate-600 space-y-3">
+                                <li class="flex items-start gap-2"><span class="text-emerald-500 mt-0.5">✔️</span> “Dor no joelho pode começar no pé. Entenda como.”</li>
+                                <li class="flex items-start gap-2"><span class="text-emerald-500 mt-0.5">✔️</span> “O que é pisada pronada e como ela impacta sua coluna.”</li>
+                                <li class="flex items-start gap-2"><span class="text-emerald-500 mt-0.5">✔️</span> Mostrar exame de baropodometria (explicando de forma simples).</li>
+                                <li class="flex items-start gap-2"><span class="text-emerald-500 mt-0.5">✔️</span> Comparativo antes/depois.</li>
+                            </ul>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl border-l-4 border-amber-500 hover:shadow-md transition-shadow">
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-bold tracking-wider">2 DIAS</span>
+                                <h4 class="font-bold text-slate-800 text-sm uppercase tracking-wider">Quebra de Crença</h4>
+                            </div>
+                            <p class="text-[11px] text-amber-600 font-bold uppercase mb-4">Objetivo: Mostrar que o problema pode estar na base.</p>
+                            <ul class="text-xs text-slate-600 space-y-3">
+                                <li class="flex items-start gap-2"><span class="text-amber-500 mt-0.5">✔️</span> “Não é sua idade.”</li>
+                                <li class="flex items-start gap-2"><span class="text-amber-500 mt-0.5">✔️</span> “Palmilha genérica não corrige desalinhamento.”</li>
+                                <li class="flex items-start gap-2"><span class="text-amber-500 mt-0.5">✔️</span> “Se você trata só a coluna, pode estar tratando errado.”</li>
+                            </ul>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl border-l-4 border-purple-500 hover:shadow-md transition-shadow">
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-bold tracking-wider">2 DIAS</span>
+                                <h4 class="font-bold text-slate-800 text-sm uppercase tracking-wider">Identificação Emocional</h4>
+                            </div>
+                            <p class="text-[11px] text-purple-600 font-bold uppercase mb-4">Objetivo: Fazer a pessoa se reconhecer.</p>
+                            <ul class="text-xs text-slate-600 space-y-3">
+                                <li class="flex items-start gap-2"><span class="text-purple-500 mt-0.5">✔️</span> “Você evita passeios longos por causa da dor?”</li>
+                                <li class="flex items-start gap-2"><span class="text-purple-500 mt-0.5">✔️</span> “Você sente dor todo final de dia?”</li>
+                                <li class="flex items-start gap-2"><span class="text-purple-500 mt-0.5">✔️</span> “Você já fez vários tratamentos e a dor sempre volta?”</li>
+                            </ul>
+                        </div>
+                        <div class="glass-card p-6 rounded-2xl border-l-4 border-rose-500 hover:shadow-md transition-shadow">
+                            <div class="flex items-center gap-3 mb-2">
+                                <span class="bg-rose-100 text-rose-700 px-3 py-1 rounded-full text-xs font-bold tracking-wider">1 DIA</span>
+                                <h4 class="font-bold text-slate-800 text-sm uppercase tracking-wider">Conversão Direta</h4>
+                            </div>
+                            <p class="text-[11px] text-rose-600 font-bold uppercase mb-4">Objetivo: Chamada clara para ação e fechamento.</p>
+                            <ul class="text-xs text-slate-600 space-y-3">
+                                <li class="flex items-start gap-2"><span class="text-rose-500 mt-0.5">✔️</span> Convite direto para avaliação da pisada.</li>
+                                <li class="flex items-start gap-2"><span class="text-rose-500 mt-0.5">✔️</span> “Se você sente dor recorrente, precisa avaliar sua base.”</li>
+                                <li class="flex items-start gap-2"><span class="text-rose-500 mt-0.5">✔️</span> Explicação do processo: teste + diagnóstico + palmilha personalizada.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- 5. ROTEIROS DE REELS -->
+            <section id="reels" class="content-section space-y-10">
+                <div class="border-b border-slate-200 pb-6">
+                    <span class="badge bg-blue-100 text-blue-700 mb-3">Secção 5</span>
+                    <h2 class="text-3xl font-bold text-slate-900">10 Roteiros Prontos para Reels</h2>
+                    <p class="text-slate-500 mt-2 text-sm">Scripts curtos (30 a 60 seg) estruturados com Gancho, Desenvolvimento e Fechamento (CTA).</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="glass-card p-6 rounded-2xl border-l-4 border-blue-600">
+                        <h5 class="font-bold text-slate-800 text-sm mb-3">🎬 Reel 1: Sua dor no joelho começa no pé</h5>
+                        <div class="space-y-2 text-xs text-slate-600">
+                            <p><strong>🪝 Gancho:</strong> "Se você trata o joelho, mas nunca avaliou o pé... você pode estar a tratar errado."</p>
+                            <p><strong>🧠 Desenvolvimento:</strong> Explique a cadeia descendente: o pé pisa torto, o joelho sofre sobrecarga, o quadril compensa e a coluna trava.</p>
+                            <p class="font-bold text-blue-700 mt-2 bg-blue-50 p-2 rounded">🏁 Fechamento: "Não trate só o sintoma, trate a causa. Agende a sua Baropodometria no link da bio."</p>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl border-l-4 border-blue-600">
+                        <h5 class="font-bold text-slate-800 text-sm mb-3">🎬 Reel 2: Dor não é idade</h5>
+                        <div class="space-y-2 text-xs text-slate-600">
+                            <p><strong>🪝 Gancho:</strong> "Se acha que a sua dor é da idade, eu preciso de lhe explicar uma coisa..."</p>
+                            <p><strong>🧠 Desenvolvimento:</strong> Muitas dores são resultado de décadas de desalinhamento a sobrecarregar as articulações. Envelhecer não é sinónimo de viver com dor.</p>
+                            <p class="font-bold text-blue-700 mt-2 bg-blue-50 p-2 rounded">🏁 Fechamento: "Envelhecer com liberdade é uma escolha mecânica. Comente 'AVALIAÇÃO' que eu explico-lhe como."</p>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl border-l-4 border-blue-600">
+                        <h5 class="font-bold text-slate-800 text-sm mb-3">🎬 Reel 3: Por que a dor sempre volta?</h5>
+                        <div class="space-y-2 text-xs text-slate-600">
+                            <p><strong>🪝 Gancho:</strong> "Você faz fisioterapia, melhora... passa um mês e a dor volta?"</p>
+                            <p><strong>🧠 Desenvolvimento:</strong> Tratar apenas a inflamação não corrige a estrutura. É como pintar uma parede com infiltração. Se a base (o pé) estiver desalinhada, o problema reaparece.</p>
+                            <p class="font-bold text-blue-700 mt-2 bg-blue-50 p-2 rounded">🏁 Fechamento: "Pare de enxugar gelo. Descubra a causa raiz. Clique no link da bio."</p>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl border-l-4 border-blue-600">
+                        <h5 class="font-bold text-slate-800 text-sm mb-3">🎬 Reel 4: O Tour da Baropodometria</h5>
+                        <div class="space-y-2 text-xs text-slate-600">
+                            <p><strong>🪝 Gancho:</strong> "Sabe exatamente como o seu pé distribui o peso do seu corpo?"</p>
+                            <p><strong>🧠 Desenvolvimento:</strong> (Mostrar a tela do exame) Mostre os pontos vermelhos de pressão e a assimetria na máquina. É assim que o computador revela a causa invisível da dor.</p>
+                            <p class="font-bold text-blue-700 mt-2 bg-blue-50 p-2 rounded">🏁 Fechamento: "Isto não é achismo, é tecnologia. Agende o seu teste de pisada hoje."</p>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl border-l-4 border-blue-600">
+                        <h5 class="font-bold text-slate-800 text-sm mb-3">🎬 Reel 5: Palmilha Farmácia x Funcional</h5>
+                        <div class="space-y-2 text-xs text-slate-600">
+                            <p><strong>🪝 Gancho:</strong> "Se já comprou palmilhas na farmácia e elas não resolveram nada, eu explico o porquê."</p>
+                            <p><strong>🧠 Desenvolvimento:</strong> A diferença entre um silicone que apenas amortece e uma palmilha biomecânica fresada que corrige ativamente a angulação do seu pé.</p>
+                            <p class="font-bold text-blue-700 mt-2 bg-blue-50 p-2 rounded">🏁 Fechamento: "O seu pé é único, a sua palmilha também tem de ser. Conheça as nossas palmilhas sob medida no link da bio."</p>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl border-l-4 border-blue-600">
+                        <h5 class="font-bold text-slate-800 text-sm mb-3">🎬 Reel 6: O Ténis Gasto não mente</h5>
+                        <div class="space-y-2 text-xs text-slate-600">
+                            <p><strong>🪝 Gancho:</strong> "Vire o seu sapato de uso diário e olhe para a sola. Se estiver gasto mais de um lado do que do outro..."</p>
+                            <p><strong>🧠 Desenvolvimento:</strong> O desgaste assimétrico é o sintoma visual de que o seu corpo está a compensar o peso errado. Isso vai cobrar uma fatura na sua coluna em breve.</p>
+                            <p class="font-bold text-blue-700 mt-2 bg-blue-50 p-2 rounded">🏁 Fechamento: "O seu sapato está a avisá-lo de algo. Vamos descobrir o quê? Agende a sua avaliação."</p>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl border-l-4 border-blue-600">
+                        <h5 class="font-bold text-slate-800 text-sm mb-3">🎬 Reel 7: A história da Paciente "Coluna"</h5>
+                        <div class="space-y-2 text-xs text-slate-600">
+                            <p><strong>🪝 Gancho:</strong> "Uma paciente chegou aqui a dizer: Dra., já tratei a minha coluna de todas as formas e nada resolve."</p>
+                            <p><strong>🧠 Desenvolvimento:</strong> Storytelling rápido. Contar como o exame mostrou que ela tinha uma perna 'mais curta' por causa da pisada, e como a palmilha reequilibrou a pélvis.</p>
+                            <p class="font-bold text-blue-700 mt-2 bg-blue-50 p-2 rounded">🏁 Fechamento: "A solução pode estar onde ninguém procura. Clique no botão da Bio para agendar."</p>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl border-l-4 border-blue-600">
+                        <h5 class="font-bold text-slate-800 text-sm mb-3">🎬 Reel 8: Equilíbrio e o medo de cair</h5>
+                        <div class="space-y-2 text-xs text-slate-600">
+                            <p><strong>🪝 Gancho:</strong> "Sente que tropeça à toa ou sente-se insegura ao descer um simples lance de escadas?"</p>
+                            <p><strong>🧠 Desenvolvimento:</strong> A instabilidade na base faz com que o corpo trabalhe em tensão constante para não cair. Isso gera dores crónicas lombares e medo.</p>
+                            <p class="font-bold text-blue-700 mt-2 bg-blue-50 p-2 rounded">🏁 Fechamento: "Recupere a segurança nos seus próprios passos. Link na bio para falar com a nossa equipa."</p>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl border-l-4 border-blue-600">
+                        <h5 class="font-bold text-slate-800 text-sm mb-3">🎬 Reel 9: O custo de adiar</h5>
+                        <div class="space-y-2 text-xs text-slate-600">
+                            <p><strong>🪝 Gancho:</strong> "Quanto vale para si poder passear num domingo com a sua família sem ter que parar por causa da dor?"</p>
+                            <p><strong>🧠 Desenvolvimento:</strong> Abordagem emocional profunda. A dor não tira apenas o conforto, tira momentos preciosos da sua vida. Quanto mais adiar, mais difícil é reverter.</p>
+                            <p class="font-bold text-blue-700 mt-2 bg-blue-50 p-2 rounded">🏁 Fechamento: "Não perca mais tempo de vida para a dor. Agende a sua Baropodometria hoje."</p>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 rounded-2xl border-l-4 border-blue-600">
+                        <h5 class="font-bold text-slate-800 text-sm mb-3">🎬 Reel 10: O Passo a Passo</h5>
+                        <div class="space-y-2 text-xs text-slate-600">
+                            <p><strong>🪝 Gancho:</strong> "Como é, na prática, fazer uma avaliação da pisada aqui comigo?"</p>
+                            <p><strong>🧠 Desenvolvimento:</strong> Vídeo em formato vlog rápido: Mostre o paciente a chegar, o teste na plataforma, o laudo 3D e a palmilha sendo entregue.</p>
+                            <p class="font-bold text-blue-700 mt-2 bg-blue-50 p-2 rounded">🏁 Fechamento: "Simples, tecnológico e definitivo. O seu novo caminho começa no link da nossa bio."</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. CAMINHO PSICOLÓGICO -->
+            <section id="funil" class="content-section space-y-10">
+                <div class="border-b border-slate-200 pb-6">
+                    <span class="badge bg-blue-100 text-blue-700 mb-3">Secção 6</span>
+                    <h2 class="text-3xl font-bold text-slate-900">O Caminho Psicológico do Paciente (Funil)</h2>
+                    <p class="text-slate-500 mt-2 text-sm">A jornada desde o desconhecimento até ao agendamento, detalhada em 5 etapas fundamentais.</p>
+                </div>
+
+                <!-- 5 Etapas do Funil -->
+                <div class="space-y-4 mb-10">
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <div class="w-12 h-12 bg-blue-900 text-white rounded-full flex items-center justify-center font-bold text-xl shrink-0">1</div>
+                        <div class="glass-card p-5 rounded-2xl flex-1 border-l-4 border-blue-900 hover:shadow-md transition-shadow">
+                            <h4 class="font-bold text-slate-800 mb-2 uppercase text-sm">Consciência do Problema</h4>
+                            <p class="text-xs text-slate-600 mb-2"><strong>Objetivo:</strong> Fazer a pessoa perceber que a dor não é normal.</p>
+                            <p class="text-xs text-slate-600 mb-2"><strong>Conteúdos:</strong> <br>• "Dor não é idade." <br>• "Por que sua dor sempre volta?" <br>• "Tratar só a coluna pode ser erro."</p>
+                            <p class="text-[10px] font-bold text-blue-600 uppercase bg-blue-50 inline-block px-2 py-1 rounded">Meta: gerar identificação</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <div class="w-12 h-12 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold text-xl shrink-0">2</div>
+                        <div class="glass-card p-5 rounded-2xl flex-1 border-l-4 border-indigo-600 hover:shadow-md transition-shadow">
+                            <h4 class="font-bold text-slate-800 mb-2 uppercase text-sm">Consciência da Causa</h4>
+                            <p class="text-xs text-slate-600 mb-2"><strong>Objetivo:</strong> Mostrar que a base pode ser a origem.</p>
+                            <p class="text-xs text-slate-600 mb-2"><strong>Conteúdos:</strong> <br>• Explicação da cadeia biomecânica <br>• Reels educativos <br>• Demonstração da baropodometria <br>• Antes/depois do exame</p>
+                            <p class="text-[10px] font-bold text-indigo-600 uppercase bg-indigo-50 inline-block px-2 py-1 rounded">Meta: gerar curiosidade</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <div class="w-12 h-12 bg-purple-500 text-white rounded-full flex items-center justify-center font-bold text-xl shrink-0">3</div>
+                        <div class="glass-card p-5 rounded-2xl flex-1 border-l-4 border-purple-500 hover:shadow-md transition-shadow">
+                            <h4 class="font-bold text-slate-800 mb-2 uppercase text-sm">Consciência da Solução</h4>
+                            <p class="text-xs text-slate-600 mb-2"><strong>Objetivo:</strong> Mostrar que existe método.</p>
+                            <p class="text-xs text-slate-600 mb-2"><strong>Conteúdos:</strong> <br>• Como funciona o teste <br>• Como a palmilha é personalizada <br>• Relatos de melhora <br>• Explicação do acompanhamento</p>
+                            <p class="text-[10px] font-bold text-purple-600 uppercase bg-purple-50 inline-block px-2 py-1 rounded">Meta: gerar confiança</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <div class="w-12 h-12 bg-amber-500 text-white rounded-full flex items-center justify-center font-bold text-xl shrink-0">4</div>
+                        <div class="glass-card p-5 rounded-2xl flex-1 border-l-4 border-amber-500 hover:shadow-md transition-shadow">
+                            <h4 class="font-bold text-slate-800 mb-2 uppercase text-sm">Redução de Objeções</h4>
+                            <p class="text-xs text-slate-600 mb-2"><strong>Conteúdos:</strong> <br>• "Palmilha não é tudo igual." <br>• "Não é só idade." <br>• "Cada caso é avaliado individualmente." <br>• Mostrar autoridade técnica</p>
+                            <p class="text-[10px] font-bold text-amber-600 uppercase bg-amber-50 inline-block px-2 py-1 rounded">Meta: remover dúvidas</p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <div class="w-12 h-12 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold text-xl shrink-0">5</div>
+                        <div class="glass-card p-5 rounded-2xl flex-1 border-l-4 border-emerald-500 hover:shadow-md transition-shadow">
+                            <h4 class="font-bold text-slate-800 mb-2 uppercase text-sm">Conversão</h4>
+                            <p class="text-xs text-slate-600 mb-2"><strong>Conteúdos:</strong> <br>• Vagas limitadas para avaliação <br>• Benefícios claros <br>• Explicar passo a passo da consulta <br>• CTA direto para agendamento</p>
+                            <p class="text-[10px] font-bold text-emerald-600 uppercase bg-emerald-50 inline-block px-2 py-1 rounded">Meta: ação</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gráfico de Conversão -->
+                <div class="glass-card p-8 rounded-3xl flex flex-col items-center mb-12 w-full max-w-4xl mx-auto border border-slate-200">
+                    <h3 class="text-xl font-bold mb-2 text-slate-800">Potencial de Conversão</h3>
+                    <p class="text-xs text-slate-500 mb-6 text-center">Evolução da intenção de compra da persona ao longo do funil de conteúdo.</p>
+                    <div class="chart-container w-full h-full">
+                        <canvas id="conversaoChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Estrutura de Stories para Conversão -->
+                <div class="bg-slate-900 text-white p-8 md:p-12 rounded-3xl shadow-xl mt-12">
+                    <h3 class="text-2xl font-bold mb-8 text-center text-emerald-400">Estrutura Ideal de Stories para Venda</h3>
+                    <p class="text-center text-slate-400 text-sm mb-8">Utilize esta sequência num mesmo dia para guiar o paciente por todo o funil mental em poucas horas.</p>
+                    
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-4 relative">
+                        <!-- Connecting Line (Desktop) -->
+                        <div class="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-slate-700 -z-10 transform -translate-y-1/2"></div>
+                        
+                        <div class="bg-slate-800 p-4 rounded-xl text-center w-full md:w-32 z-10 border border-slate-700">
+                            <p class="text-3xl mb-2">❓</p>
+                            <p class="text-[10px] font-bold uppercase">1. Pergunta</p>
+                            <p class="text-[9px] text-slate-400 mt-1">Sente dor no fim do dia? (Caixinha)</p>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-xl text-center w-full md:w-32 z-10 border border-slate-700">
+                            <p class="text-3xl mb-2">📊</p>
+                            <p class="text-[10px] font-bold uppercase">2. Dado</p>
+                            <p class="text-[9px] text-slate-400 mt-1">Mostrar o problema do desalinhamento.</p>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-xl text-center w-full md:w-32 z-10 border border-slate-700">
+                            <p class="text-3xl mb-2">🔗</p>
+                            <p class="text-[10px] font-bold uppercase">3. A Cadeia</p>
+                            <p class="text-[9px] text-slate-400 mt-1">Explicar que o pé afeta a coluna.</p>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-xl text-center w-full md:w-32 z-10 border border-slate-700">
+                            <p class="text-3xl mb-2">🖥️</p>
+                            <p class="text-[10px] font-bold uppercase">4. O Exame</p>
+                            <p class="text-[9px] text-slate-400 mt-1">Mostrar a baropodometria na prática.</p>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-xl text-center w-full md:w-32 z-10 border border-slate-700">
+                            <p class="text-3xl mb-2">🗣️</p>
+                            <p class="text-[10px] font-bold uppercase">5. Depoimento</p>
+                            <p class="text-[9px] text-slate-400 mt-1">Print ou vídeo de paciente feliz.</p>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-xl text-center w-full md:w-32 z-10 border border-slate-700">
+                            <p class="text-3xl mb-2">⚙️</p>
+                            <p class="text-[10px] font-bold uppercase">6. Explicação</p>
+                            <p class="text-[9px] text-slate-400 mt-1">Como a palmilha é feita.</p>
+                        </div>
+                        <div class="bg-emerald-600 p-4 rounded-xl text-center w-full md:w-32 z-10 shadow-lg shadow-emerald-900/50">
+                            <p class="text-3xl mb-2">🎯</p>
+                            <p class="text-[10px] font-bold uppercase text-white">7. Venda</p>
+                            <p class="text-[9px] text-emerald-100 mt-1">CTA com Link Direto WhatsApp.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FOOTER ASSINATURA DA AGÊNCIA -->
+            <div class="mt-24 pt-8 border-t border-slate-200 flex flex-col items-center justify-center text-center opacity-70 hover:opacity-100 transition-opacity duration-300">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-4">Planeamento e Estratégia Desenvolvido por</p>
+                
+                <!-- LOGO RODAPÉ -->
+                <img src="https://i.postimg.cc/BbPsHBL4/3.png" alt="Minds Connect Marketing Digital" class="max-h-16 w-auto object-contain drop-shadow-sm">
+
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        let chartInstance = null;
+
+        function initFunilChart() {
+            if (chartInstance) return; // Só inicializa uma vez
+            
+            const ctx = document.getElementById('conversaoChart').getContext('2d');
+            
+            let gradient = ctx.createLinearGradient(0, 0, 0, 300);
+            gradient.addColorStop(0, 'rgba(16, 185, 129, 0.5)'); // emerald-500
+            gradient.addColorStop(1, 'rgba(16, 185, 129, 0.0)');
+
+            chartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Etapa 1', 'Etapa 2', 'Etapa 3', 'Etapa 4', 'Etapa 5'],
+                    datasets: [{
+                        label: 'Potencial de Conversão (%)',
+                        data: [10, 30, 60, 85, 100],
+                        borderColor: '#10b981',
+                        backgroundColor: gradient,
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#ffffff',
+                        pointBorderColor: '#10b981',
+                        pointBorderWidth: 2,
+                        pointRadius: 5,
+                        pointHoverRadius: 7
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { 
+                            beginAtZero: true, 
+                            max: 100, 
+                            ticks: { 
+                                callback: function(value) { return value + '%' } 
+                            } 
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+
+        function showTab(tabId) {
+            // Esconde todas as secções
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            // Mostra a secção ativa
+            document.getElementById(tabId).classList.add('active');
+            
+            // Atualiza os estados do menu lateral
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // Inicializa o gráfico se a aba for a do Funil e ainda não tiver sido inicializado
+            if (tabId === 'funil') {
+                setTimeout(initFunilChart, 150);
+            }
+            
+            // Retorna suavemente ao topo
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Inicializa a primeira visualização
+        window.addEventListener('DOMContentLoaded', () => {
+            if(document.getElementById('funil').classList.contains('active')){
+                initFunilChart();
+            }
+        });
+    </script>
+</body>
+</html>
