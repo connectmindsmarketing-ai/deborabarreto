@@ -66,10 +66,33 @@
         }
     </style>
 </head>
-<body class="flex min-h-screen overflow-hidden">
+<body class="flex flex-col lg:flex-row h-[100dvh] overflow-hidden">
+
+    <!-- HEADER MOBILE (Apenas visível no Telemóvel) -->
+    <header class="lg:hidden flex shrink-0 items-center justify-between bg-white border-b border-slate-200 p-4 z-30 shadow-sm">
+        <div class="flex items-center gap-3">
+            <span class="text-blue-600 font-bold text-xl bg-blue-50 p-2 rounded-lg">🦶</span>
+            <div>
+                <h1 class="text-sm font-bold text-slate-800 leading-none">Dra. Débora Barreto</h1>
+                <p class="text-[10px] text-blue-600 font-bold uppercase tracking-widest mt-1">Estratégia 2026</p>
+            </div>
+        </div>
+        <button onclick="toggleMobileMenu()" class="p-2 text-slate-600 bg-slate-50 border border-slate-200 rounded-lg hover:bg-slate-100 transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+    </header>
+
+    <!-- OVERLAY MOBILE (Fundo escuro ao abrir o menu) -->
+    <div id="mobileOverlay" onclick="toggleMobileMenu()" class="fixed inset-0 bg-slate-900/40 z-40 hidden backdrop-blur-sm transition-opacity opacity-0 lg:hidden"></div>
 
     <!-- SIDEBAR DE NAVEGAÇÃO -->
-    <aside class="w-72 bg-white border-r border-slate-200 flex flex-col hidden lg:flex h-screen z-10 shadow-sm shrink-0">
+    <aside id="sidebar" class="w-72 bg-white border-r border-slate-200 flex flex-col fixed lg:relative inset-y-0 left-0 h-full lg:h-screen z-50 shadow-2xl lg:shadow-sm shrink-0 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+        
+        <!-- Botão Fechar (Apenas Mobile) -->
+        <button onclick="toggleMobileMenu()" class="lg:hidden absolute top-4 right-4 p-2 bg-slate-50 border border-slate-200 rounded-full text-slate-500 hover:text-red-500 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+
         <div class="p-8 border-b border-slate-100">
             <div class="text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-1">Estratégia 2026</div>
             <h1 class="text-xl font-bold text-slate-800 leading-tight">Dra. Débora Barreto</h1>
@@ -110,7 +133,7 @@
     </aside>
 
     <!-- ÁREA DE CONTEÚDO PRINCIPAL -->
-    <main class="flex-1 h-screen overflow-y-auto bg-slate-50 scroll-smooth">
+    <main class="flex-1 overflow-y-auto bg-slate-50 scroll-smooth">
         <div class="max-w-6xl mx-auto p-4 md:p-10 lg:p-12 pb-24">
 
             <!-- 1. DIAGNÓSTICO DIGITAL -->
@@ -212,7 +235,7 @@
                         <span class="p-2 bg-blue-100 text-blue-600 rounded-xl text-xl">💻</span> 
                         Análise do Ecossistema de Sites
                     </h3>
-                    <p class="text-slate-500 mb-8 text-sm">Avaliação do site principal e do hub de links (Canva) utilizados atualmente na jornada de conversão.</p>
+                    <p class="text-slate-500 mb-8 text-sm">Avaliação do site principal e da Landing Page (Canva) utilizados atualmente na jornada de conversão.</p>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
                         <!-- Site Principal -->
@@ -245,9 +268,9 @@
                             </div>
                         </div>
 
-                        <!-- Site Canva -->
+                        <!-- Landing Page Canva -->
                         <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 hover:shadow-md transition-shadow">
-                            <h4 class="font-bold text-purple-700 text-base mb-5 flex items-center gap-2"><span>🔗</span> Site Canva (Link da Bio)</h4>
+                            <h4 class="font-bold text-purple-700 text-base mb-5 flex items-center gap-2"><span>🔗</span> Landing Page Canva</h4>
                             <div class="space-y-5 text-sm text-slate-600">
                                 <div>
                                     <span class="font-bold text-emerald-600 uppercase text-[10px] tracking-wider block mb-2 flex items-center gap-1"><span class="text-base">👍</span> Pontos Fortes</span>
@@ -268,7 +291,7 @@
                                 </div>
                                 <div class="bg-purple-100/50 p-4 rounded-xl text-purple-900 text-xs font-medium border border-purple-200 mt-auto">
                                     <strong class="block mb-1 text-purple-700 uppercase tracking-wider text-[10px]">Conclusão Técnica</strong>
-                                    O link do Canva funciona como hub, mas não deve ser a única porta de entrada estratégica.
+                                    A Landing Page Canva funciona como hub, mas não deve ser a única porta de entrada estratégica.
                                 </div>
                             </div>
                         </div>
@@ -290,7 +313,7 @@
                             </div>
                             <div class="md:col-span-2 bg-emerald-50 border border-emerald-100 p-6 rounded-2xl flex flex-col justify-center">
                                 <p class="text-base text-emerald-900 font-medium leading-relaxed mb-3">
-                                    Não é estratégico manter apenas o link do site Canva. É fundamental facilitar o caminho para quem já está pronto para converter.
+                                    Não é estratégico manter apenas o link da Landing Page Canva. É fundamental facilitar o caminho para quem já está pronto para converter.
                                 </p>
                                 <p class="text-sm text-emerald-700 bg-white p-3 rounded-lg border border-emerald-100 shadow-sm inline-block">
                                     <strong>🚀 Conclusão:</strong> Essa configuração torna o Instagram não apenas um canal de conteúdo, mas um canal estruturado de geração de oportunidades (Conversão Imediata + Autoridade + Educação).
@@ -336,7 +359,7 @@
                                     <div class="flex-1">
                                         <h6 class="font-bold text-slate-800 text-lg flex items-center flex-wrap gap-2">
                                             Entenda o teste da pisada 
-                                            <span class="text-[10px] font-bold text-purple-700 bg-purple-100 px-2 py-1 rounded-full uppercase tracking-wider">Site Canva</span>
+                                            <span class="text-[10px] font-bold text-purple-700 bg-purple-100 px-2 py-1 rounded-full uppercase tracking-wider">Landing Page Canva</span>
                                         </h6>
                                         <p class="text-sm text-slate-500 mt-2 leading-relaxed"><strong>Motivo:</strong> Função educativa. Explica o processo de forma simples e objetiva, ajudando na tomada de decisão.</p>
                                     </div>
@@ -376,13 +399,58 @@
                     <h2 class="text-3xl font-bold text-slate-900">Concorrência e Benchmarking Local</h2>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="glass-card p-6 rounded-2xl hover:shadow-md transition-all">
-                        <h4 class="font-bold text-blue-700 text-lg mb-1">Readaptec Baropodometria</h4>
-                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-3">Benchmarking Técnico</p>
-                        <p class="text-sm text-slate-600"><strong>Destaque:</strong> Combina análise estática com análise da marcha e corrida.</p>
-                        <p class="text-sm text-slate-600 mt-1"><strong>Oportunidade:</strong> Focar na explicação didática dos resultados.</p>
+                <!-- Análise Principal: Dayse Magalhães -->
+                <div class="glass-card p-8 rounded-3xl border-t-4 border-purple-600">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 border-b border-slate-100 pb-6">
+                        <div>
+                            <h3 class="text-2xl font-bold text-slate-800 flex items-center gap-3">
+                                <span class="text-3xl p-2 bg-purple-100 rounded-xl">👑</span> 
+                                Concorrente Principal: Dayse Magalhães (Instituto DM)
+                            </h3>
+                            <p class="text-sm text-slate-500 mt-2">Maior referência atual em Salvador no ramo de palmilhas e posturologia.</p>
+                        </div>
+                        <span class="badge bg-purple-100 text-purple-700 shrink-0">Análise Aprofundada</span>
                     </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Pontos Fortes -->
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 hover:border-emerald-300 transition-colors">
+                            <h4 class="font-bold text-emerald-700 text-sm uppercase tracking-wider mb-4 flex items-center gap-2"><span>💪</span> Pontos Fortes Dela</h4>
+                            <ul class="text-xs text-slate-600 space-y-3">
+                                <li><strong class="text-emerald-800">Posicionamento de Instituto:</strong> Separa a marca pessoal da clínica, gerando peso de "Laboratório do Pé".</li>
+                                <li><strong class="text-emerald-800">Nicho de Ouro:</strong> Forte atração de pais preocupados com a pisada infantil.</li>
+                                <li><strong class="text-emerald-800">O Efeito "Aula":</strong> Pacientes elogiam o acolhimento e a clareza nas explicações.</li>
+                                <li><strong class="text-emerald-800">Arsenal Tecnológico:</strong> Comunica possuir diversas tecnologias além da Baropodometria.</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Fraquezas -->
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 hover:border-red-300 transition-colors">
+                            <h4 class="font-bold text-red-600 text-sm uppercase tracking-wider mb-4 flex items-center gap-2"><span>⚠️</span> Pontos Fracos Dela</h4>
+                            <ul class="text-xs text-slate-600 space-y-3">
+                                <li><strong class="text-red-800">Perfis Divididos:</strong> Gerir dois Instagrams dilui o engajamento e divide a atenção da audiência.</li>
+                                <li><strong class="text-red-800">Foco Geral:</strong> Tenta falar com todos (crianças, idosos, atletas), perdendo a força de um nicho específico.</li>
+                                <li><strong class="text-red-800">Design Tradicional:</strong> Identidade visual com aspecto de clínica médica convencional.</li>
+                                <li><strong class="text-red-800">Atrito no Agendamento:</strong> Site complexo com muitos passos até a conversão e botão de WhatsApp.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Oportunidades para Débora -->
+                        <div class="bg-blue-50 p-6 rounded-2xl border border-blue-200 shadow-sm hover:shadow-md transition-shadow">
+                            <h4 class="font-bold text-blue-800 text-sm uppercase tracking-wider mb-4 flex items-center gap-2"><span>🎯</span> Oportunidades p/ Débora</h4>
+                            <ul class="text-xs text-blue-700 space-y-3">
+                                <li><strong>Perfil Híbrido:</strong> Concentrar forças num único perfil (@deborabarretofisio) unindo humanização e ciência de ponta.</li>
+                                <li><strong>A Guerreira Urbana:</strong> Dominar o nicho da mulher ativa (35-52 anos) que usa saltos e trabalha muito, deixando o infantil para a Dayse.</li>
+                                <li><strong>Estética Premium Boutique:</strong> Visual minimalista e elegante, fugindo do padrão estético "clínica branca".</li>
+                                <li><strong>Conversão Expressa:</strong> Ter um link de WhatsApp super direto na Bio para capturar o paciente quente e com pressa.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Outros Benchmarks -->
+                <h3 class="text-xl font-bold text-slate-800 mt-10 mb-4 flex items-center gap-2"><span>🔍</span> Outros Perfis de Benchmarking</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div class="glass-card p-6 rounded-2xl hover:shadow-md transition-all">
                         <h4 class="font-bold text-blue-700 text-lg mb-1">Dr. Leonardo Bomfim</h4>
                         <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-3">Benchmarking de Humanização</p>
@@ -735,7 +803,7 @@
                     <h3 class="text-2xl font-bold mb-6 flex items-center gap-2 text-slate-800 border-t border-slate-200 pt-8">
                         <span>🧩</span> Método EJACA (Tipos de Conteúdos)
                     </h3>
-                    <p class="text-slate-500 mb-8 text-sm">Estrutura persuasiva para guiões de vídeos e posts em carrossel que conectam com a dor e geram autoridade instantânea.</p>
+                    <p class="text-slate-500 mb-8 text-sm">Estrutura persuasiva para guiar os vídeos e posts em carrossel que conectam com a dor e geram autoridade instantânea.</p>
 
                     <div class="space-y-5">
                         <div class="glass-card p-6 rounded-2xl flex flex-col md:flex-row gap-6 items-start border-l-4 border-emerald-500 hover:shadow-md transition-shadow">
@@ -1118,6 +1186,22 @@
     <script>
         let chartInstance = null;
 
+        // Função para abrir/fechar o menu no telemóvel
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobileOverlay');
+            
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('opacity-0');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+            }
+        }
+
         function initFunilChart() {
             if (chartInstance) return; // Só inicializa uma vez
             
@@ -1178,6 +1262,14 @@
                 item.classList.remove('active');
             });
             event.currentTarget.classList.add('active');
+            
+            // Fecha o menu automaticamente no telemóvel após clicar
+            if (window.innerWidth < 1024) { 
+                const sidebar = document.getElementById('sidebar');
+                if (!sidebar.classList.contains('-translate-x-full')) {
+                    toggleMobileMenu();
+                }
+            }
             
             // Inicializa o gráfico se a aba for a do Funil e ainda não tiver sido inicializado
             if (tabId === 'funil') {
